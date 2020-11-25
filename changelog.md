@@ -17,3 +17,5 @@ Changelog-005
 Refactored code to be more streamlined
 Migrated to use an application load-balancer instead of a classic load-balancer
 
+Changelog-006
+updated readme.md
