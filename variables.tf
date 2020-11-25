@@ -82,7 +82,6 @@ variable my-priv-subnet-cidr-blocks {
   ]
 }
 
-
 variable my-instance-type {
   description = "Type of EC2 instance to use."
   type        = string

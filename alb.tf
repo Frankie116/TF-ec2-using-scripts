@@ -1,3 +1,4 @@
+
 resource "aws_lb" "my-alb" {
   name                       = "my-alb"
   internal                   = false

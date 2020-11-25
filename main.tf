@@ -86,4 +86,5 @@ resource "aws_instance" "my-server" {
     Environment          = var.my-environment
   }
 }
+
  

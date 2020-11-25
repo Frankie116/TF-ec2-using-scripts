@@ -13,6 +13,7 @@ Refactored code to be more streamlined
 moved scripts into seperate folder in tf root
 updated module/variable names
 
-Changelog-004
+Changelog-005
 Refactored code to be more streamlined
 Migrated to use an application load-balancer instead of a classic load-balancer
+
