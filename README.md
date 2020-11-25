@@ -42,7 +42,9 @@ Author: Frank Effrim-Botchey
 [05] Open Server SG to allow access to Jenkins server (port 8080) [Done]
 
 [06] Execute a Terraform run to build the above resources.  [Done]
+
         - User should be able to connect to a single jenkins server using its dns name on port 8080.  
+
         - User should see jenkins registration page.
 
 
@@ -51,12 +53,17 @@ Author: Frank Effrim-Botchey
 # --------------------------
 
 [01] AUTO BUILD NEW SERVER SOFTWARE [Done]
+
         - Install Ubuntu, Java & jenkins onto new EC2 & manually complete the jenkins registration process.
+
         or
+
         - Use Ansible to auto build new jenkins server and auto complete registratoion process
 
 [02] USE SNAPSHOT TO BUILD SERVER SOFTWARE [Done]
+
         - Terraform will look for an existing snapshot in the region and use that to build ec2 instances.
+        
         - Snapshot will contain java, jenkins and any user data such as jenkins jobs etc.
 
 [03] Provide an option at runtime to auto build a new jenkins server or use a snapshot of a pre-built jenkins server. [Done]
@@ -111,7 +118,11 @@ Author: Frank Effrim-Botchey
 # --------------------------
 ## Pre Requisits
 # --------------------------
+
 The region where the server is to built needs to have the following existing AWS resources:
+
         - An elastic-ip named "my-eip-<region>"
+
         - A key-pair name "my-kp-eu-<region>"
+
         - A snapshot of a pre-configured server/backup named "my-snapshot-<region>"  
