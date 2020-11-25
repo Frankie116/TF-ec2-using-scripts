@@ -93,7 +93,7 @@ default = 1
 }
 
 variable "my-scriptfile" {
-    default = "my-script.sh"
+    default = "my-script-any.sh"
 }
 
 variable "use-snapshot" {
