@@ -1,3 +1,8 @@
+# ---------------------------------------------------------------------------------------------------
+# Project:  lab038-jenkins-cluster
+# Author:   Frank Effrim-Botchey
+# ---------------------------------------------------------------------------------------------------
+
 output this-public-dns-name {
   description = "Public DNS name of load balancer"
   value       = aws_lb.my-alb.dns_name
