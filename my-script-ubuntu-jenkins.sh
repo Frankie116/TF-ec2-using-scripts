@@ -25,4 +25,4 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 
-echo "<html><body><div>Welcome to the Jenkins Server (${my-scriptname}) </div></body></html>" > /var/www/html/index.html
+echo "<html><body><div>Welcome to the Jenkins Server (${my-scriptfile}) </div></body></html>" > /var/www/html/index.html

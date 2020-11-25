@@ -9,7 +9,7 @@ Author: Frank Effrim-Botchey
 # --------------------------
 [00] Build/refactor code that is re-usable and streamlined
 
-[01] Create terraform modules to enable the following AWS resources to be built on a terraform run: [Done]
+[01] Use Terrafrom/Private modules to enable the following AWS resources to be built on a terraform run: [Done]
 
     - Multiple EC2 instances 
 

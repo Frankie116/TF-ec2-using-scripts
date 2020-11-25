@@ -1,46 +1,35 @@
-variable aws_region {
+variable my-region {
   description = "AWS region"
   type        = string
   default     = "eu-west-2"
 }
 
-variable project_name {
+variable my-project-name {
   description = "Name of the project. Used in resource names and tags."
   type        = string
-  default     = "client-webapp"
+  default     = "lab038"
 }
 
-variable environment {
+variable my-environment {
   description = "Value of the 'Environment' tag."
   type        = string
   default     = "dev"
 }
 
-variable public_subnets_per_vpc {
-  description = "Number of public subnets. Maximum of 16."
-  type        = number
-  default     = 2
-}
-
-variable private_subnets_per_vpc {
-  description = "Number of private subnets. Maximum of 16."
-  type        = number
-  default     = 2
-}
-
-variable instance_type {
-  description = "Type of EC2 instance to use."
-  type        = string
-  default     = "t2.micro"
-}
-
-variable vpc_cidr_block {
+variable my-vpc-cidr-block {
   description = "CIDR block for VPC"
   type        = string
   default     = "10.0.0.0/16"
 }
 
-variable public_subnet_cidr_blocks {
+
+variable my-pub-subnets-per-vpc {
+  description = "Number of public subnets. Maximum of 16."
+  type        = number
+  default     = 2
+}
+
+variable my-pub-subnet-cidr-blocks {
   description = "Available cidr blocks for public subnets"
   type        = list(string)
   default = [
@@ -63,7 +52,14 @@ variable public_subnet_cidr_blocks {
   ]
 }
 
-variable private_subnet_cidr_blocks {
+
+variable my-priv-subnets-per-vpc {
+  description = "Number of private subnets. Maximum of 16."
+  type        = number
+  default     = 2
+}
+
+variable my-priv-subnet-cidr-blocks {
   description = "Available cidr blocks for private subnets"
   type        = list(string)
   default = [
@@ -86,17 +82,24 @@ variable private_subnet_cidr_blocks {
   ]
 }
 
-variable instances_per_subnet {
+
+variable my-instance-type {
+  description = "Type of EC2 instance to use."
+  type        = string
+  default     = "t2.micro"
+}
+
+variable my-instances-per-subnet {
 description = "Number of EC2 instances in each private subnet"
 type = number
 default = 1
 }
 
-variable "my-scriptfile" {
-    default = "my-script-any.sh"
+variable my-scriptfile {
+    default = "my-script-ubuntu-jenkins.sh"
 }
 
-variable "use-snapshot" {
+variable use-snapshot {
   description = "If true, a pre-configured snapshot that is available in the required region will be used"
   type        = bool
   default     = false
