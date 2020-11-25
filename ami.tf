@@ -16,9 +16,9 @@ data "aws_ebs_snapshot" "my-existing-snapshot" {
   }
 }
 
-resource "aws_ami" "my-ami" {
+resource "aws_ami" "my-snapshot-ami" {
   # count                 = var.use-snapshot ? 1 : 0
-  name                    = "my-snapshot-ami-${random_string.lb_id.result}"
+  name                    = "my-snapshot-ami-${random_string.my-random-string.result}"
   virtualization_type     = "hvm"
   root_device_name        = "/dev/sda1"
   ebs_block_device {

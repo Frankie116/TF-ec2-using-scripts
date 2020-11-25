@@ -8,4 +8,10 @@ updated readme & uploaded build scripts.
 Changelog-003
 Refactored code to be more streamlined
 
+Changelog-004
+Refactored code to be more streamlined
+moved scripts into seperate folder in tf root
 
+Changelog-005
+Refactored code to be more streamlined
+updated module/variable names

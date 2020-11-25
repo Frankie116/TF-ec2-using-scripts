@@ -21,7 +21,7 @@ provider "aws" {
 
 locals {
   ami-mapping            = {
-    true                 = aws_ami.my-ami.id
+    true                 = aws_ami.my-snapshot-ami.id
     false                = data.aws_ami.amazon_linux.id, 
     }
 }
@@ -30,7 +30,7 @@ data "aws_availability_zones" "available" {
   state                  = "available"
 }
 
-module "vpc" {
+module "my-vpc" {
   source                 = "terraform-aws-modules/vpc/aws"
   version                = "2.44.0"
   cidr                   = var.my-vpc-cidr-block
@@ -41,40 +41,41 @@ module "vpc" {
   enable_vpn_gateway     = false
 }
 
-module "app_security_group" {
+module "my-security-group" {
   source                 = "terraform-aws-modules/security-group/aws//modules/web"
   version                = "3.12.0"
-  name                   = "web-server-sg-${var.my-project-name}-${var.my-environment}"
+  name                   = "${var.my-project-name}-my-server-sg-${var.my-environment}"
   description            = "Security group for web-servers with HTTP ports open within VPC"
-  vpc_id                 = module.vpc.vpc_id
-  ingress_cidr_blocks    = module.vpc.public_subnets_cidr_blocks
+  vpc_id                 = module.my-vpc.vpc_id
+  ingress_cidr_blocks    = module.my-vpc.public_subnets_cidr_blocks
 }
 
-module "lb_security_group" {
+module "my-lb-security-group" {
   source                 = "terraform-aws-modules/security-group/aws//modules/web"
   version                = "3.12.0"
-  name                   = "load-balancer-sg-${var.my-project-name}-${var.my-environment}"
+  name                   = "${var.my-project-name}-my-lb-sg-${var.my-environment}"
   description            = "Security group for load balancer with HTTP ports open within VPC"
-  vpc_id                 = module.vpc.vpc_id
+  vpc_id                 = module.my-vpc.vpc_id
   ingress_cidr_blocks    = ["0.0.0.0/0"]
 }
 
-resource "random_string" "lb_id" {
+resource "random_string" "my-random-string" {
   length                 = 4
   special                = false
 }
 
-module "elb_http" {
+module "my-elb" {
   source                 = "terraform-aws-modules/elb/aws"
   version                = "2.4.0"
   # Comply with ELB name restrictions 
   # https://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_CreateLoadBalancer.html
-  name                   = trimsuffix(substr(replace(join("-", ["lb", random_string.lb_id.result, var.my-project-name, var.my-environment]), "/[^a-zA-Z0-9-]/", ""), 0, 32), "-")
+  # name                   = trimsuffix(substr(replace(join("-", ["lb", random_string.my-random-string.result, var.my-project-name, var.my-environment]), "/[^a-zA-Z0-9-]/", ""), 0, 32), "-")
+  name                   = trimsuffix(substr(replace(join("-", [var.my-project-name,"my-lb", random_string.my-random-string.result, var.my-environment]), "/[^a-zA-Z0-9-]/", ""), 0, 32), "-")
   internal               = false
-  security_groups        = [module.lb_security_group.this_security_group_id]
-  subnets                = module.vpc.public_subnets
-  number_of_instances    = length(aws_instance.app)
-  instances              = aws_instance.app.*.id
+  security_groups        = [module.my-lb-security-group.this_security_group_id]
+  subnets                = module.my-vpc.public_subnets
+  number_of_instances    = length(aws_instance.my-server)
+  instances              = aws_instance.my-server.*.id
   listener               = [{
     instance_port        = "80"
     instance_protocol    = "HTTP"
@@ -104,12 +105,12 @@ data "template_file" "my-user-data" {
   }
 }
 
-resource "aws_instance" "app" {
-  count                  = var.my-instances-per-subnet * length(module.vpc.private_subnets)
+resource "aws_instance" "my-server" {
+  count                  = var.my-instances-per-subnet * length(module.my-vpc.private_subnets)
   ami                    = lookup(local.ami-mapping, var.use-snapshot, "This option should never get chosen")
   instance_type          = var.my-instance-type
-  subnet_id              = module.vpc.private_subnets[count.index % length(module.vpc.private_subnets)]
-  vpc_security_group_ids = [module.app_security_group.this_security_group_id]
+  subnet_id              = module.my-vpc.private_subnets[count.index % length(module.my-vpc.private_subnets)]
+  vpc_security_group_ids = [module.my-security-group.this_security_group_id]
   user_data              = data.template_file.my-user-data.rendered
   tags = {
     Terraform            = "true"

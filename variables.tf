@@ -96,11 +96,11 @@ default = 1
 }
 
 variable my-scriptfile {
-    default = "my-script-ubuntu-jenkins.sh"
+    default = "scripts/my-script-any.sh"
 }
 
 variable use-snapshot {
   description = "If true, a pre-configured snapshot that is available in the required region will be used"
   type        = bool
-  default     = false
+  default     = true
 }
