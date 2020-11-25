@@ -1,6 +1,6 @@
 output this-public-dns-name {
   description = "Public DNS name of load balancer"
-  value       = module.my-elb.this_elb_dns_name
+  value       = aws_lb.my-alb.dns_name
 }
 
 output this-vpc-arn {

@@ -24,6 +24,7 @@ locals {
     true                 = aws_ami.my-snapshot-ami.id
     false                = data.aws_ami.amazon_linux.id, 
     }
+  instance-count         = var.my-instances-per-subnet * length(module.my-vpc.private_subnets)
 }
 
 data "aws_availability_zones" "available" {
@@ -64,40 +65,6 @@ resource "random_string" "my-random-string" {
   special                = false
 }
 
-module "my-elb" {
-  source                 = "terraform-aws-modules/elb/aws"
-  version                = "2.4.0"
-  # Comply with ELB name restrictions 
-  # https://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_CreateLoadBalancer.html
-  # name                   = trimsuffix(substr(replace(join("-", ["lb", random_string.my-random-string.result, var.my-project-name, var.my-environment]), "/[^a-zA-Z0-9-]/", ""), 0, 32), "-")
-  name                   = trimsuffix(substr(replace(join("-", [var.my-project-name,"my-lb", random_string.my-random-string.result, var.my-environment]), "/[^a-zA-Z0-9-]/", ""), 0, 32), "-")
-  internal               = false
-  security_groups        = [module.my-lb-security-group.this_security_group_id]
-  subnets                = module.my-vpc.public_subnets
-  number_of_instances    = length(aws_instance.my-server)
-  instances              = aws_instance.my-server.*.id
-  listener               = [{
-    instance_port        = "80"
-    instance_protocol    = "HTTP"
-    lb_port              = "80"
-    lb_protocol          = "HTTP"
-  },
-  {
-    instance_port        = 8080
-    instance_protocol    = "TCP"
-    lb_port              = 8080
-    lb_protocol          = "TCP"
-  },
-  ]
-  health_check = {
-    target               = "HTTP:80/index.html"
-    interval             = 10
-    healthy_threshold    = 3
-    unhealthy_threshold  = 10
-    timeout              = 5
-  }
-}
-
 data "template_file" "my-user-data" {
   template               = file(var.my-scriptfile)
   vars                   = {
@@ -106,15 +73,17 @@ data "template_file" "my-user-data" {
 }
 
 resource "aws_instance" "my-server" {
-  count                  = var.my-instances-per-subnet * length(module.my-vpc.private_subnets)
+  count                  = local.instance-count
   ami                    = lookup(local.ami-mapping, var.use-snapshot, "This option should never get chosen")
   instance_type          = var.my-instance-type
   subnet_id              = module.my-vpc.private_subnets[count.index % length(module.my-vpc.private_subnets)]
   vpc_security_group_ids = [module.my-security-group.this_security_group_id]
   user_data              = data.template_file.my-user-data.rendered
   tags = {
+    Name                 = "${var.my-servername}-0${count.index+1}" 
     Terraform            = "true"
     Project              = var.my-project-name
     Environment          = var.my-environment
   }
 }
+ 

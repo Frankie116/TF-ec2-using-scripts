@@ -104,3 +104,7 @@ variable use-snapshot {
   type        = bool
   default     = true
 }
+
+variable my-servername {
+    default = "jenkins"
+}
