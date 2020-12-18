@@ -1,5 +1,6 @@
 # ----------------------------
-# lab038-jenkins-cluster
+# TF-ec2-using-scripts
+
 Author: Frank Effrim-Botchey
 # ----------------------------
 
