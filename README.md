@@ -1,16 +1,17 @@
-# ----------------------------
-# TF-ec2-using-scripts
+----------------------------
+## TF-ec2-using-scripts
 
 Author: Frank Effrim-Botchey
-# ----------------------------
+----------------------------
 
 
-# --------------------------
-## Part 1 Main Objectives
-# --------------------------
-[00] Build/refactor code that is re-usable and streamlined
+--------------------------
 
-[01] Use Terrafrom/Private modules to enable the following AWS resources to be built on a terraform run: [Done]
+Part 1 Main Objectives
+
+--------------------------
+
+[01] Build/refactor code thaodules to enable the following AWS resources to be built on a terraform run: [Done]
 
     - Multiple EC2 instances 
 
@@ -49,9 +50,11 @@ Author: Frank Effrim-Botchey
         - User should see jenkins registration page.
 
 
-# --------------------------
-## Part 2 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 2 Feature Objectives
+
+--------------------------
 
 [01] AUTO BUILD NEW SERVER SOFTWARE [Done]
 
@@ -72,9 +75,11 @@ Author: Frank Effrim-Botchey
 [04] Provide an option to create a snapshot of jenkins server when infrastructure is destroyed.
 
 
-# --------------------------
-## Part 3 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 3 Feature Objectives
+
+--------------------------
 
 [01] Enable multiple servers to be created on same network infrastructure [Done]
 
@@ -83,24 +88,30 @@ Author: Frank Effrim-Botchey
 [03] Configure jenkins in a cluster and save build as new snapshot
 
 
-# --------------------------
-## Part 4 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 4 Feature Objectives
+
+--------------------------
 
 [01] Introduce auto scaling resources to be optionally built
 
 
-# --------------------------
-## Part 5 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 5 Feature Objectives
+
+--------------------------
 
 [01] Setup monitoring Cloudwatch alarms
 
 [02] Send email/text alerts based on Cloudwatch alarms
 
-# --------------------------
-## Part 6 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 6 Feature Objectives
+
+--------------------------
 
 [01] Use Terraform Cloud as the backend instead of a local backend. 
 
@@ -108,17 +119,21 @@ Author: Frank Effrim-Botchey
 
 
 
-# --------------------------
-## Part 7 Feature Objectives
-# --------------------------
+--------------------------
+
+Part 7 Feature Objectives
+
+--------------------------
 
 [01] Build this project in Docker containers instead of individual aws resources
 
 
 
-# --------------------------
-## Pre Requisits
-# --------------------------
+--------------------------
+
+Pre Requisits
+
+--------------------------
 
 The region where the server is to built needs to have the following existing AWS resources:
 
