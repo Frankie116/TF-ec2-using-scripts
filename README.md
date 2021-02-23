@@ -1,5 +1,5 @@
 ----------------------------
-## TF-ec2-using-scripts
+## TF03-ec2-using-scripts
 
 Author: Frank Effrim-Botchey
 ----------------------------
