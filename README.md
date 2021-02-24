@@ -1,7 +1,9 @@
 ----------------------------
+
 ## TF03-ec2-using-scripts
 
 Author: Frank Effrim-Botchey
+
 ----------------------------
 
 
@@ -11,7 +13,7 @@ Part 1 Main Objectives
 
 --------------------------
 
-[01] Build/refactor code thaodules to enable the following AWS resources to be built on a terraform run: [Done]
+[01] Build/refactor code to enable the following AWS resources to be built on a terraform run: [Done]
 
     - Multiple EC2 instances 
 
